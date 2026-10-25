@@ -6,6 +6,8 @@ Study materials from the 7th Guangdong–Hong Kong–Macao Accounting Knowledge 
 
 Besides the 13 module guides, this repo keeps the full production process: structured data for 1,472 questions, 24 processing scripts, and intermediate artifacts. The workflow applies to any exam where you need to digest a large question bank quickly.
 
+How this material was iterated step by step: [STORY.md](./STORY.md)
+
 (All documents are in Chinese.)
 
 ## Approach
