@@ -1,40 +1,37 @@
-# accounting-prep-bootcamp · Accounting Competition Prep Engine
+# accounting-prep-bootcamp · Accounting Competition Prep
 
 > **中文版本 → [README.zh-CN.md](./README.zh-CN.md)**
->
-> Result first: 7th Guangdong-Hong Kong-Macao Accounting Knowledge Competition — **Provincial Top 5, advanced to the final** (32 universities / 200 teams; final on 2026-11-28).
-> This repo is the full arsenal I built as team captain, plus the complete process archive: **1,472 questions, 13 modules, 24 automation scripts**.
 
-## The story
+Study materials from the 7th Guangdong–Hong Kong–Macao Accounting Knowledge Competition. Our team placed in the provincial top 5 out of 200 teams from 32 universities and advanced to the final on 2026-11-28. I was the team captain and produced the preparation materials.
 
-I treated this competition as a checkpoint to verify my accounting foundations. Full version (including a 90-second interview script) in [简历故事.md](./简历故事.md) (Chinese). The action chain:
+Besides the 13 module guides, this repo keeps the full production process: structured data for 1,472 questions, 24 processing scripts, and intermediate artifacts. The workflow applies to any exam where you need to digest a large question bank quickly.
 
-```
-Located prior-edition question banks from public channels (1,000 + 483 questions)
-  → merged & deduplicated into 1,472 questions
-  → distribution analysis locked the focus: enterprise + government accounting dominate
-  → human-AI parallel: Claude Code wrote per-question deep explanations + mnemonics in the
-    background while I worked through 700 junior-accounting practice questions myself
-  → tagged every question by knowledge point, clustered and ranked by frequency
-    — review order became data-driven
-  → structural upgrade: each module now "teaches first (mnemonics + everyday analogies),
-    then drills" — the question bank became a textbook
-  → pre-exam split: "deep-understanding" vs "memorize-and-score" tracks + a one-page
-    cheat sheet; deliberately skipped low-frequency hard topics (long-term equity, leases)
-  → exported Word versions and distributed to the whole team
-```
+(All documents are in Chinese.)
 
-Preparing alone is studying. **Arming the whole team is captaincy.**
+## Approach
 
-## The 5-section structure of every guide (`markdown/`)
+Questions came from prior-edition banks found through public channels — two sources (1,000 + 483 questions), merged and deduplicated into 1,472.
 
-1. **Knowledge framework** — mind-map-style overview
-2. **Core exam points** — definitions + comparison tables + mnemonics
-3. **Top 10 trap questions** — "wrong claim vs right claim" format
-4. **Quick-reference tables** — key numbers / ratios / deadlines for last-minute review
-5. **Full question practice** — with answers and sources
+The preparation ran on several tracks:
 
-## Module map (1,472 questions)
+1. **Set priorities.** Question distribution showed enterprise and government accounting standards made up over half the bank, so the strategy shifted from full coverage to focused breakthroughs.
+2. **Fix the explanations.** Official answers were one-liners I couldn't learn from. I had Claude Code generate per-question explanations and mnemonics, while working through 700 junior-accounting practice questions myself to build foundations.
+3. **Order by frequency.** Every question was tagged by knowledge point, clustered, and sorted by frequency — high-frequency topics first.
+4. **Restructure.** For topics that still didn't stick, modules were rebuilt as "teach first (mnemonics + everyday analogies), then drill" — the question bank became a textbook.
+5. **Split by phase.** Before the exam, content was divided into a deep-understanding track and a memorize-and-score track, plus a one-page sheet of high-frequency rules. Hard, low-frequency topics (long-term equity investments, leases) were dropped.
+6. **Distribute.** All guides were exported to Word and shared with the team so everyone prepared from the same material.
+
+## Document structure
+
+Each module guide has five parts:
+
+1. Knowledge framework overview
+2. Core exam points (definitions + comparison tables + mnemonics)
+3. Top 10 trap questions (wrong claim vs right claim)
+4. Quick-reference tables (numbers / ratios / deadlines)
+5. Full question practice (with answers and sources)
+
+## Modules and question counts
 
 | Module | Questions | Priority |
 |--------|-----------|----------|
@@ -45,22 +42,16 @@ Preparing alone is studying. **Arming the whole team is captaincy.**
 | 13 Comprehensive Regulations | 162 | Medium |
 | 8 other modules (tax / budget / archives / IT / management accounting…) | 385 | Medium-Low |
 
-For crunch time: `markdown/00_总复习_知识点与易错点.md` + `word/考前突击速成手册.docx` (all content in Chinese).
+For final review: `markdown/00_总复习_知识点与易错点.md` and `word/考前突击速成手册.docx`.
 
 ## Repo layout
 
-- `markdown/` — 13 module guides + master review (AI-generated, human-verified md sources)
-- `word/` — Word versions distributed to teammates (incl. crash-review handbook and the teach-first sample)
-- `archive/` — the full process archive, proving how this material was engineered:
-  - `scripts/` — 24 Python scripts: question parsing (parse) → assembly (build) → independent validation (validate) → md-to-docx conversion (reusable)
-  - `data/` — structured JSON source data for all 1,472 questions (no / label / type / stem / answer)
-  - `knowledge-points/` `review-cards/` `lectures/` — knowledge-point lists, module review cards, 12 lecture scripts for the Enterprise Accounting Standards module
-  - `master/` `crash/` `sample/` — md sources for the all-module master review, crash handbook, and teach-first sample
+- `markdown/` — 13 module guides + master review, Markdown sources
+- `word/` — Word versions distributed to the team, including the crash-review handbook and a teach-first sample
+- `archive/` — production archive
+  - `scripts/` — 24 Python scripts: question parsing (parse), assembly (build), character-level validation (validate), Markdown-to-Word conversion (md2docx)
+  - `data/` — structured JSON for all 1,472 questions (no / label / type / stem / answer)
+  - `knowledge-points/`, `review-cards/`, `lectures/` — knowledge-point lists, module review cards, 12 lecture scripts for the Enterprise Accounting Standards module
+  - `master/`, `crash/`, `sample/` — Markdown sources for the master review, crash handbook, and teach-first sample
 
-**Quality record**: after re-grouping, a character-level diff against the original bank shows **zero differences** (validated by an independent script, not by AI self-report); every question belongs to exactly one module; true/false questions originally misplaced under "single choice" were reclassified by label prefix. See [archive/README.md](./archive/README.md).
-
-## The three most valuable takeaways
-
-1. **Data-driven decisions**: set strategy from question distribution, order revision by knowledge-point frequency — no gut-feel studying
-2. **Human-AI division of labor**: AI batch-writes explanations; humans build foundations — two parallel tracks, no blocking
-3. **Knowing what to skip**: long-term equity and leases were dropped — exam prep is score maximization under constraints, not coverage maximization
+Quality checks: after re-grouping by knowledge point, a character-level diff against the original bank shows zero differences (independent validate.py script); every question belongs to exactly one module; true/false questions originally misplaced under "single choice" were reclassified by label prefix. Details in [archive/README.md](./archive/README.md).
