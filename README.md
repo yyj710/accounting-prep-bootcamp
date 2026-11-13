@@ -1,27 +1,59 @@
-# accounting-prep-bootcamp · One Semester, Three Accounting Deadlines
+# accounting-prep-bootcamp · One Autumn, Four Exams, One Set of Notes
 
 > **中文版本 → [README.zh-CN.md](./README.zh-CN.md)**
 
-**In one line**: in autumn 2026 I was running three things at once — the 7th Guangdong–Hong Kong–Macao Accounting Knowledge Competition (team captain, final on 2026-11-28), a primary financial accounting final where I was aiming for a **top grade**, and two ACCA global exams (FR and FM) in December. There was no time to revise three times, and all three run on the same accounting knowledge. So I built **one body of material plus four offline practice sites you can open by double-clicking** — worked out sentence by sentence with AI.
+In mid-November 2026 I opened my calendar and found these dates sitting on top of each other:
 
-This repo is not a file dump. It records **what problem I hit → what I actually asked for in the conversation → what came back → how I checked it and pushed it back → what ended up being usable**.
+| Date | What |
+|---|---|
+| **28 Nov 2026** | Final of the 7th Guangdong–Hong Kong–Macao Accounting Knowledge Competition (I'm team captain) |
+| **10 Dec 2026** | ACCA FR global exam |
+| **11 Dec 2026** | ACCA FM global exam |
+| **End of term** | Primary financial accounting final — date not fixed yet, but revision has to start now |
 
-**Start here**:
+I'm a first-year student. Four deadlines within about five weeks, and what worried me wasn't that the material was hard — it was **revising the same accounting knowledge four times, each time from page one**. A separate pile of notes per exam, a separate round of highlighting, most of the time spent repeating myself.
 
-- [How I work with AI to get results](./HOW-I-WORK-WITH-AI.md) — my own words, eight rounds of rework, the wrong calls, the outcomes (full Chinese version [here](./HOW-I-WORK-WITH-AI.zh-CN.md))
-- [Tools and stories for all four study lines](./learning-tracks/README.md) — final exam / ACCA FR / ACCA FM / CPA tax, every one downloadable and ready to use
+So I stopped preparing by *subject* and started preparing by *topic*. How inventory is measured, when revenue is recognised, how statements are put together — the competition tests it, the final tests it, FR and FM test it too. Build it once, use it four times. For the final I just want a good grade; I'm not going to shout a target here. The part I actually worked hard on was making the material **something I'd willingly open every day**.
+
+This repo isn't a file dump. It records a fairly ordinary chain:
+
+> **where I got stuck → what I actually typed in the conversation → what came back → how I clicked through it and where my own judgement was wrong → what ended up being usable**
+
+AI writing code is the easy part. Defining the problem clearly and bothering to check the result is not — and that's the part worth copying.
+
+## Start here
+
+- [How I work with AI to get results](./HOW-I-WORK-WITH-AI.md) — my own words, eight rounds of rework, the calls I got wrong, and what was actually built at each step. **If you read one file, read this one.** (Fuller Chinese version [here](./HOW-I-WORK-WITH-AI.zh-CN.md))
+- [Four tools you can just open](./learning-tracks/README.md) — final exam / ACCA FR / ACCA FM / CPA tax
 - [The full competition story](./STORY.md) — from 1,472 questions to the provincial top 5
 
-## Why three lines share one set of notes
+## What you can take away
 
-| Line | Goal | What I built | Status |
+| If you are… | Take this | How to use it |
+|---|---|---|
+| Studying primary financial accounting | [Final-exam station](./learning-tracks/01-final-exam/期末复习_满绩冲刺.html) | Double-click, work through 489 questions by chapter, then the accounting-entries drill |
+| Sitting ACCA FR (F7) | [FR station](./learning-tracks/02-acca-fr/ACCA_FR_复习站.html) + [condensed notes](./learning-tracks/02-acca-fr/ACCA_FR_考前速记笔记_化简版.md) | Chapter by chapter normally, condensed notes before the exam |
+| Sitting ACCA FM (F5) | [FM station](./learning-tracks/03-acca-fm-pm/ACCA_FM_刷题站.html) + [written-answer templates](./learning-tracks/03-acca-fm-pm/FM_文字题模板.md) | Drill → wrong answers back to the quick reference → templates before the exam |
+| Studying CPA tax | [Tax self-test site](./learning-tracks/04-cpa-tax/税法CPA复习站.html) | Self-test by chapter, scan the quick-reference tables at the end |
+| Not studying accounting, but drowning in a question bank | [The collaboration notes](./HOW-I-WORK-WITH-AI.md) + [the prep approach](./STORY.md) | Reuse the chain: set priorities → write explanations → reorder → split by phase |
+
+All four pages are **a single HTML file each**: no install, no internet, no login. Progress lives in your own browser. Copy it to a USB stick or send it to a classmate and it still opens.
+
+One small thing worth saying out loud: I also revised probability & statistics this term, but that set only matches my own course and isn't tidy enough. **If I wouldn't recommend it to someone else, it doesn't go public.**
+
+## Four lines, one body of knowledge
+
+| Line | When | What I built | Where it stands |
 |---|---|---|---|
-| Accounting competition | Lead the team's prep | 1,472 questions regrouped by knowledge point + 13 module guides | Provincial top 5 of 200 teams, into the final |
-| Primary accounting final | **Top grade** | One offline page: 489 questions, 178 accounting entries | Working, still improving |
-| ACCA FR / FM | December global exams | Two offline practice sites + notes rewritten in my own words | In progress |
-| CPA tax | Keep my hand in | A 5-chapter self-test site | Working |
+| Accounting competition | Final **28 Nov** | 1,472 questions regrouped by knowledge point + 13 module guides | Provincial top 5 of 200 teams; preparing for the final |
+| Primary accounting final | End of term, date TBC | One offline page: 489 questions, 178 accounting entries | Working; new coursework still being added |
+| ACCA FR | **10 Dec** | Offline station + notes rewritten in my own words | In progress |
+| ACCA FM | **11 Dec** | Offline drill site + written-answer templates | In progress |
+| CPA tax | Not a main line this term | 5-chapter self-test site | Just keeping my hand in |
 
-**Useful to you**: all four pages work offline — no install, no internet, no login. Download, double-click, and your progress is saved in your own browser. Most study material is in Chinese; the overviews and the collaboration notes are bilingual.
+The first three are the main lines; tax is a fourth tool I keep around so I don't go rusty. Everything is ordered by what the courses actually need — protect the term grade first, and let the competition and ACCA ride on the same material. **Build once, reuse in a different room.** That decision saved me more time than anything else this term.
+
+Most study material is in Chinese; the overviews and the collaboration notes are bilingual.
 
 ---
 
@@ -76,11 +108,14 @@ For final review: `markdown/00_总复习_知识点与易错点.md` and `word/考
   - `data/` — structured JSON for all 1,472 questions (no / label / type / stem / answer)
   - `knowledge-points/`, `review-cards/`, `lectures/` — knowledge-point lists, module review cards, 12 lecture scripts for the Enterprise Accounting Standards module
   - `master/`, `crash/`, `sample/` — Markdown sources for the master review, crash handbook, and teach-first sample
+- `learning-tracks/` — the four offline tools built this term
 
 Quality checks: after re-grouping by knowledge point, a character-level diff against the original bank shows zero differences (independent validate.py script); every question belongs to exactly one module; true/false questions originally misplaced under "single choice" were reclassified by label prefix. Details in [archive/README.md](./archive/README.md).
 
-## Added 2026-11-13: study lines and the collaboration notes
+## Added 2026-11-13: the rest of the same semester
 
-- `learning-tracks/` — four study lines (final exam / ACCA FR / ACCA FM / CPA tax), each with an offline page you can open directly and a short "what problem I hit, how I built it" note.
-- `HOW-I-WORK-WITH-AI.md` / `HOW-I-WORK-WITH-AI.zh-CN.md` — **the part I most want people to read**: what I asked for, how I checked the output, where my judgement was wrong, and what came out in the end.
-- Raw logs, throwaway scripts and historical snapshots stay in a private worklog repo. Textbook PDFs, Word originals and scanned source files are not included here.
+Until now this repo held only competition prep. The final, FR, FM and tax material went in together because **they were all built in the same weeks** — splitting them up made the design harder to explain, not easier.
+
+- `learning-tracks/` — four offline pages, each with a short note on where I got stuck and how it turned out.
+- `HOW-I-WORK-WITH-AI.md` / `.zh-CN.md` — the part I most want people to read: the original messages, the wrong calls, what was concretely built at each step, and the outcome. Bilingual.
+- Raw logs, throwaway scripts and historical snapshots stay in a private worklog repo; textbook PDFs, Word originals and scanned source files are not included. **What's public here is the finished tools, and the thinking that produced them.**
