@@ -139,6 +139,24 @@ Multi-choice questions sat selected but the submit button did nothing. The tempt
 
 ---
 
+## 9. This time I made it research first, not guess
+
+Two weeks before the final I reopened the wrong-answer book and something felt wrong: all 144 items showed the answer as soon as the page loaded. Scanning them felt like studying, but it was just re-reading. The pills on every card — source, chapter, question type — were labels, not filters; if I wanted only the Chapter 3 homework mistakes, I had to scroll and hunt.
+
+What I sent was offhand:
+
+> "Can I get an option to redo these? And sort them by which section they came from. Go look at how proper wrong-answer books are designed."
+
+That last sentence was the point. I didn't want to describe the UI again — we'd already proved I can't, and it can't guess. **Having it study working products beats me writing a spec from my head.**
+
+**What it did**: it checked Fenbi, Shuashuati, Anki, Quizlet, ACCA's exam interface and old-fashioned paper error notebooks, then came back with a comparison table. Nearly all of them treat *independent redo* as the core action — hide the explanation, answer first, check afterwards; filter by subject / module / question type; remove only once you've actually got it right. It also listed what it would **not** copy: error-cause tags, three-level self-ratings, spaced-repetition scheduling, auto-removal after three correct answers, a second "favourites" notebook. I'd rejected exactly those on 13 November as "one judgement split into four buttons", and Anki's own docs say the days before an exam are the wrong moment to start an SRS.
+
+Then, instead of touching my file, it built **four clickable prototypes** with real questions from my bank — filtering, answering, submitting and removing all worked. I answered with one letter: "A". It implemented that one.
+
+**What I took from it**: I wasn't asking for two features, I was asking not to make design decisions two weeks before an exam. Research first, clickable options second, one letter from me. Nice side effect: it found `src` and `ch` already stored on every wrong answer, so **not one byte of saved progress changed** — the 144 items stayed exactly where they were.
+
+---
+
 ## A few less flattering things
 
 I'm writing these down because they're more useful than the results:
@@ -162,6 +180,7 @@ I'm writing these down because they're more useful than the results:
 6. **Keep the practice loop light.** Checking plus reviewing is enough; it doesn't have to be auto-graded.
 7. **Separate "known / lucky guess / don't know"** — don't let the system decide mastery for you.
 8. **Leave one trace per round**, so you can later see how your own judgement got better.
+9. **If you can't describe an interface, don't try.** Have it research how existing products solve it, then show clickable versions you can pick from with one letter.
 
 ---
 
@@ -169,11 +188,11 @@ I'm writing these down because they're more useful than the results:
 
 | | |
 |---|---|
-| Final-exam station | One 486 KB file, double-click to open, no install, no internet: **489 questions**, **178 entry templates**, mistake book, skip marking, auto-saved progress |
+| Final-exam station | One 494 KB file, double-click to open, no install, no internet: **489 questions**, **178 entry templates**, mistake book (one-click redo, filter by source / chapter), skip marking, auto-saved progress |
 | Competition prep | 1,472 questions reorganised by knowledge point + 13 module guides; provincial top 5 of 200 teams, final on **28 Nov** |
 | ACCA FR / FM | One offline practice site each, plus notes rewritten in the way I actually understand things (FR uses a five-block template: plain language / everyday example / how it connects / exam hint / common traps). **FR 10 Dec, FM 11 Dec — in progress** |
 | CPA tax | A practice site with a 5-chapter question bank |
-| This file | The eight rounds of judgement, rework and concrete steps above |
+| This file | The nine rounds of judgement, rework and concrete steps above |
 
 Not every number is impressive, but every one of them opens, clicks and works.
 

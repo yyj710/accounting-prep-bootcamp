@@ -2,7 +2,7 @@
 
 > **中文版本 → [README.zh-CN.md](./README.zh-CN.md)**
 >
-> 一句话：2026 年秋天我同时赶 11/28 竞赛决赛、期末、12/10 ACCA FR、12/11 ACCA FM 四场考试，只整理了一套会计资料，做成 4 个双击就能开的离线刷题网页。最值得看的是[《我怎么和 AI 协作拿结果》](./HOW-I-WORK-WITH-AI.zh-CN.md)：对话原话、八次返工、我自己判断错的地方，以及每一步具体怎么做出来的。
+> 一句话：2026 年秋天我同时赶 11/28 竞赛决赛、期末、12/10 ACCA FR、12/11 ACCA FM 四场考试，只整理了一套会计资料，做成 4 个双击就能开的离线刷题网页。最值得看的是[《我怎么和 AI 协作拿结果》](./HOW-I-WORK-WITH-AI.zh-CN.md)：对话原话、九次返工、我自己判断错的地方，以及每一步具体怎么做出来的。
 
 In mid-November 2026 I opened my calendar and found these dates sitting on top of each other:
 
@@ -25,7 +25,7 @@ AI writing code is the easy part. Defining the problem clearly and bothering to 
 
 ## Start here
 
-- [How I work with AI to get results](./HOW-I-WORK-WITH-AI.md) — my own words, eight rounds of rework, the calls I got wrong, and what was actually built at each step. **If you read one file, read this one.** (Fuller Chinese version [here](./HOW-I-WORK-WITH-AI.zh-CN.md))
+- [How I work with AI to get results](./HOW-I-WORK-WITH-AI.md) — my own words, nine rounds of rework, the calls I got wrong, and what was actually built at each step. **If you read one file, read this one.** (Fuller Chinese version [here](./HOW-I-WORK-WITH-AI.zh-CN.md))
 - [Four tools you can just open](./learning-tracks/README.md) — final exam / ACCA FR / ACCA FM / CPA tax
 - [The full competition story](./STORY.md) — from 1,472 questions to the provincial top 5
 

@@ -130,6 +130,19 @@ details.ch .body{padding:0 16px 14px;border-top:1px solid var(--bd)}
 .wbar{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
 .wbar button{border:1px solid var(--bd);background:#fff;color:var(--sub);border-radius:8px;padding:5px 14px;cursor:pointer;font-size:13px}
 .wbar button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* ---- v16 错题本：重做开关 + 板块筛选 ---- */
+.wbar button.wredo{border-color:var(--blue);color:var(--blue);font-weight:600}
+.wbar button.wredo.on{background:var(--blue);color:#fff}
+.wfbar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:7px 0}
+.wfbar .wfk{font-size:12px;color:var(--sub);margin-right:2px;white-space:nowrap}
+.wfbar button{border:1px solid var(--bd);background:#fff;color:var(--sub);border-radius:999px;padding:3px 11px;font-size:12px;cursor:pointer}
+.wfbar button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.wfbar button:disabled{opacity:.42;cursor:default}
+.wph{background:var(--bg);border:1px dashed var(--bd);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--sub);margin:8px 0}
+.wselinfo{font-size:12px;color:var(--sub);align-self:center}
+.btnrow .ok,.btnrow .bad{align-self:center;font-size:13px}
+
 @media print{header,.topbtn,.filters,.myrow{display:none}}
 </style>
 </head>
@@ -730,7 +743,6 @@ function removeWrong(id){
   redraw(sy);
 }
 function unmanual(id){const sy=window.scrollY; if(DB.wrong[id])delete DB.wrong[id].manual; redraw(sy);}
-let WMODE=0;                             /* 错题本：0 全部 / 1 只看手动标记 */
 
 /* ---- 业务题 ---- */
 function renderBiz(){
@@ -739,42 +751,105 @@ function renderBiz(){
   BIZ.map(b=>'<details class="biz"><summary>'+b[0]+'</summary><div class="body">'+b[1].map(s=>'<div class="stem" style="margin:6px 0">'+s+'</div>').join('')+'<details><summary>▼ 参考答案</summary><div class="entry">'+b[2]+'</div></details></div></details>').join('');
 }
 
-/* ---- 错题本 ---- */
+/* ---- 错题本 v16：一键重做 + 板块筛选（方案 A） ---- */
+let WMODE=0;                 /* 0 全部 / 1 只看手动标记 */
+let WREDO=0;                 /* 0 复习（答案摊开） / 1 重做（答案收起，独立作答） */
+let WFS='全部', WFC='全部';   /* 来源 / 章节筛选 */
+const WANS={}, WSEL={};      /* 重做作答状态：只放内存，不写入 DB */
+const WSRCS=['课堂练习','作业·第3章','作业·第4章','CPA 加固','CPA 轻一精练','CPA 轻二精练','分录实训'];
+function wch(w){return (w&&(CHNORM[w.ch]||w.ch))||''}
+function wrerender(){const sy=window.scrollY;renderWrong();window.scrollTo({top:sy})}
+function wclear(id){delete WANS[id];delete WSEL[id]}
+
 function renderWrong(){
   const el=$('#tab-wrong');
+  if(!DB.wrong)DB.wrong={};
   const all=Object.keys(DB.wrong);
-  const ids=WMODE===1?all.filter(id=>DB.wrong[id]&&DB.wrong[id].manual):all;
+  const base=WMODE===1?all.filter(id=>DB.wrong[id]&&DB.wrong[id].manual):all;
   const mn=all.filter(id=>DB.wrong[id]&&DB.wrong[id].manual).length;
-  let h='<p class="statline">错题 '+all.length+' 道（其中手动标记 '+mn+' 道：蒙对 / 想再复习）。目标：考前清零。</p>'+
-   '<div class="wbar"><button class="'+(WMODE===0?'on':'')+'" onclick="WMODE=0;renderWrong()">全部错题</button>'+
-   '<button class="'+(WMODE===1?'on':'')+'" onclick="WMODE=1;renderWrong()">★ 只看手动标记（'+mn+'）</button></div>'+
-   '<div class="btnrow" style="margin-bottom:12px"><button class="danger" onclick="if(confirm(\'确定清空全部做题进度、错题本和免做标记？\')){DB={done:{},wrong:{},skip:{}};if(window.ECLEAR)ECLEAR();save();renderWrong();}">重置全部进度</button></div>'+
+  const inS=id=>WFS==='全部'||DB.wrong[id].src===WFS;
+  const inC=id=>WFC==='全部'||wch(DB.wrong[id])===WFC;
+  const ids=base.filter(id=>inS(id)&&inC(id));
+  const forS=base.filter(inC), forC=base.filter(inS);
+  const bar=(vals,cur,attr,arr,test)=>vals.map(v=>{
+    const n=v==='全部'?arr.length:arr.filter(id=>test(DB.wrong[id],v)).length;
+    return '<button class="'+(cur===v?'on':'')+'" data-'+attr+'="'+v+'"'+(n?'':' disabled')+'>'+v+(n?' '+n:'')+'</button>';
+  }).join('');
+  const srcBar=bar(['全部',...WSRCS],WFS,'ws',forS,(w,v)=>w.src===v);
+  const chBar=bar(['全部',...CHORDER],WFC,'wc',forC,(w,v)=>wch(w)===v);
+  let h='<p class="statline">错题 '+all.length+' 道（其中手动标记 '+mn+' 道：蒙对 / 想再复习）。目标：考前清零。'+
+   (ids.length!==all.length?' 当前筛选显示 '+ids.length+' 道。':'')+'</p>'+
+   '<div class="wbar"><button class="'+(WMODE===0?'on':'')+'" onclick="WMODE=0;wrerender()">全部错题</button>'+
+   '<button class="'+(WMODE===1?'on':'')+'" onclick="WMODE=1;wrerender()">★ 只看手动标记（'+mn+'）</button>'+
+   '<button class="wredo'+(WREDO?' on':'')+'" onclick="WREDO=WREDO?0:1;wrerender()">'+(WREDO?'✓ 重做模式已开（答案收起）':'↻ 重做模式')+'</button></div>'+
+   '<div class="wfbar"><span class="wfk">来源</span>'+srcBar+'</div>'+
+   '<div class="wfbar"><span class="wfk">章节</span>'+chBar+'</div>'+
+   '<div class="btnrow" style="margin-bottom:12px"><button class="danger" onclick="if(confirm(\'确定清空全部做题进度、错题本和免做标记？\')){DB={done:{},wrong:{},skip:{}};if(window.ECLEAR)ECLEAR();save();wrerender();}">重置全部进度</button></div>'+
    (WMODE===1&&!ids.length?'<div class="card">暂无手动标记的题。刷题时点「＋ 加错题本」即可把蒙对的、想再复习的题放进来。</div>':'');
-  if(!ids.length)h+='<div class="card">🎉 错题本为空，继续保持！</div>';
+  if(!ids.length)h+='<div class="card">'+(all.length?'🎉 这个范围没有错题了，换个板块看看。':'🎉 错题本为空，继续保持！')+'</div>';
   ids.forEach(id=>{
-    const w=DB.wrong[id], qq=QB.find(x=>x.id===id);
-    let body='';
-    if(qq){
-      if(qq.t===3){
-        body='<div class="judge">'+['√','×'].map((v,i)=>'<button disabled class="'+(qq.ans[0]===(i?'×':'√')?'right':'')+'">'+v+'</button>').join('')+'</div>';
-      }else{
-        body='<div class="opts">'+qq.opts.map((o,i)=>{
-          const L=String.fromCharCode(65+i);
-          return '<button disabled class="'+(qq.ans.includes(L)?'right':'')+'">'+L+'. '+esc(o)+'</button>';
-        }).join('')+'</div>';
-      }
-    }
+    const w=DB.wrong[id], qq=QB.find(x=>x.id===id), ans=WANS[id];
     const eh=(typeof ENTRYHTML==='function')?ENTRYHTML(id):'';
-    h+='<div class="qcard errr"><div class="meta"><span class="pill">'+w.src+'</span><span class="pill">'+w.ch+'</span>'+
+    const live=WREDO&&!ans;
+    let body='';
+    if(qq&&qq.t===3){
+      body='<div class="judge">'+['√','×'].map(v=>
+        '<button data-v="'+v+'"'+(live?'':' disabled')+' class="'+
+        (live?'':(qq.ans[0]===v?'right':(ans&&ans.pick&&ans.pick[0]===v?'wrongpick':'')))+'">'+v+'</button>').join('')+'</div>';
+    }else if(qq){
+      body='<div class="opts">'+qq.opts.map((o,i)=>{
+        const L=String.fromCharCode(65+i);
+        return '<button data-i="'+i+'" data-l="'+L+'"'+(live?'':' disabled')+' class="'+
+          (live?'':(qq.ans.includes(L)?'right':(ans&&ans.pick&&ans.pick.includes(L)?'wrongpick':'')))+'">'+L+'. '+esc(o)+'</button>';
+      }).join('')+'</div>';
+    }
+    let exp='';
+    if(qq){if(!WREDO||ans)exp='<div class="exp" style="display:block"><b>答案：'+qq.ans.join('')+'</b><br>'+esc(qq.exp)+'</div>';}
+    else if(eh){exp=(!WREDO||ans)?'<div class="entry">'+eh+'</div>':'<div class="wph">先在纸上默写这笔分录，点「对答案」后核对借贷方向与金额。</div>';}
+    let btns='';
+    if(WREDO&&!ans){
+      btns='<button class="wsubmit" data-wid="'+id+'">'+(qq?'提交答案':'✓ 写好了，对答案')+'</button>'+
+        (qq&&qq.t===2?'<span class="wselinfo">已选 '+((WSEL[id]&&WSEL[id].size)||0)+' 项 / 至少选 2 项</span>':'');
+    }else if(WREDO&&ans){
+      const txt=ans.self?'已对照参考答案，请自己判断写对没有':(ans.ok?'✓ 重做答对了':'✗ 又错了，留在错题本');
+      btns='<span class="'+(ans.self?'':(ans.ok?'ok':'bad'))+'">'+txt+'</span>'+
+        '<button onclick="delete DB.done[\''+id+'\'];wclear(\''+id+'\');removeWrong(\''+id+'\')">✓ 已掌握，移出错题本</button>'+
+        ((ans.self||!ans.ok)?'<button class="wagain" data-wid="'+id+'">↻ 再做一次</button>':'');
+    }else{
+      btns='<button onclick="delete DB.done[\''+id+'\'];wclear(\''+id+'\');removeWrong(\''+id+'\')">✓ 已掌握，移出错题本</button>'+
+        (w.manual?'<button onclick="unmanual(\''+id+'\')">↺ 撤销手动标记（保留为普通错题）</button>':'');
+    }
+    h+='<div class="qcard errr" data-wid="'+id+'"><div class="meta"><span class="pill">'+w.src+'</span><span class="pill">'+w.ch+'</span>'+
     (qq&&qq.sub?'<span class="pill sect">'+qq.sub+'</span>':'')+'<span class="pill">'+(qq?TNAME[qq.t]:'分录')+'</span>'+
     (w.manual?' <span class="warn">★ 手动加入</span>':'')+'</div><div class="stem">'+esc(w.stem)+'</div>'+
-    (qq?body+'<div class="exp" style="display:block"><b>答案：'+qq.ans.join('')+'</b><br>'+esc(qq.exp)+'</div>':'')+
-    (eh&&!qq?'<div class="entry">'+eh+'</div>':'')+
-    '<div class="btnrow"><button onclick="delete DB.done[\''+id+'\'];removeWrong(\''+id+'\')">✓ 已掌握，移出错题本</button>'+
-    (w.manual?'<button onclick="unmanual(\''+id+'\')">↺ 撤销手动标记（保留为普通错题）</button>':'')+
-    '</div></div>';
+    body+exp+'<div class="btnrow">'+btns+'</div></div>';
   });
   el.innerHTML=h;
+  el.querySelectorAll('[data-ws]').forEach(b=>b.onclick=()=>{WFS=b.dataset.ws;wrerender()});
+  el.querySelectorAll('[data-wc]').forEach(b=>b.onclick=()=>{WFC=b.dataset.wc;wrerender()});
+  el.querySelectorAll('.qcard[data-wid]').forEach(c=>{
+    const id=c.dataset.wid, qq=QB.find(x=>x.id===id);
+    if(!WREDO||WANS[id])return;
+    const sel=WSEL[id]||(WSEL[id]=new Set()), info=c.querySelector('.wselinfo');
+    if(qq)c.querySelectorAll('.opts button,.judge button').forEach(b=>b.onclick=()=>{
+      if(qq.t===3){sel.clear();sel.add(b.dataset.v);
+        c.querySelectorAll('.judge button').forEach(z=>z.classList.remove('sel'));b.classList.add('sel');}
+      else{const i=+b.dataset.i;sel.has(i)?sel.delete(i):sel.add(i);b.classList.toggle('sel');}
+      if(info)info.textContent='已选 '+sel.size+' 项'+(sel.size<2?'（多选至少 2 项）':'');
+    });
+    const sub=c.querySelector('.wsubmit');
+    if(sub)sub.onclick=()=>{
+      if(!qq){WANS[id]={self:1};wrerender();return;}
+      const p=[...sel];
+      if(qq.t===2&&p.length<2){sub.textContent='多选至少选 2 项';return;}
+      if(!p.length){sub.textContent='请先选答案';return;}
+      const letters=qq.t===3?[p[0]]:p.map(i=>String.fromCharCode(65+i)).sort();
+      const ok=qq.t===3?letters[0]===qq.ans[0]:
+        (letters.length===qq.ans.length&&letters.every((l,k)=>l===qq.ans.slice().sort()[k]));
+      WANS[id]={ok:ok,pick:letters};wrerender();
+    };
+  });
+  el.querySelectorAll('.wagain').forEach(b=>b.onclick=()=>{wclear(b.dataset.wid);wrerender()});
 }
 </script>
 <script>
